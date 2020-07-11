@@ -6,14 +6,14 @@
 /*   By: jlee <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 17:23:56 by jlee              #+#    #+#             */
-/*   Updated: 2020/07/11 20:36:24 by jlee             ###   ########.fr       */
+/*   Updated: 2020/07/11 21:45:37 by jlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdio.h>
+#include <stdlib.h>
 
-int g_grid[4][4];
+int *g_grid[4];
 
 int		is_valid_row_view(int row, int **row_view, int inverse)
 {
@@ -23,6 +23,8 @@ int		is_valid_row_view(int row, int **row_view, int inverse)
 	int current_height;
 
 	i = 0;
+	count = 0;
+	current_height = 0;
 	while (i < 4)
 	{
 		k = i;
@@ -52,6 +54,8 @@ int		is_valid_col_view(int col, int **col_view, int inverse)
 	int current_height;
 
 	i = 0;
+	count = 0;
+	current_height = 0;
 	while (i < 4)
 	{
 		k = i;
@@ -97,8 +101,8 @@ int		is_unassigned(int *row, int *col)
 		{
 			if(g_grid[i][j] == 0)
 			{
-				*row = j;
-				*col = i;
+				*row = i;
+				*col = j;
 				return 1;
 			}
 			j++;
@@ -112,6 +116,7 @@ int		is_valid_row_col(int row, int col)
 {
 	int i;
 
+	i = 0;
 	while (i < 4)
 	{
 		if (i != col && g_grid[row][i] == g_grid[row][col])
@@ -188,13 +193,47 @@ void    print_g_grid()
     }
 }
 
-int		main(int argc, char* argv[])
+int		main()
 {
 	int i;
-	int j;
-	int count;
-	int **row_view;
-	int **col_view;
+
+	i = 0;
+	int** row_view;
+	int** col_view;
+
+	row_view = (int**)malloc(sizeof(int*) * 4);
+	col_view = (int**)malloc(sizeof(int*) * 4);
+	
+	while (i < 4)
+	{
+		row_view[i] = (int*)malloc(sizeof(int) * 2);
+		col_view[i] = (int*)malloc(sizeof(int) * 2);
+		i++;
+	}
+	
+	i = 0;
+	while (i < 4)
+	{
+		g_grid[i] = (int*)malloc(sizeof(int) * 4);
+		i++;
+	}
+
+	col_view[0][0] = 2;
+	col_view[1][0] = 3;
+	col_view[2][0] = 2;
+	col_view[3][0] = 1;
+	col_view[0][1] = 3;
+	col_view[1][1] = 1;
+	col_view[2][1] = 2;
+	col_view[3][1] = 2;
+	row_view[0][0] = 3;
+	row_view[1][0] = 1;
+	row_view[2][0] = 2;
+	row_view[3][0] = 2;
+	row_view[0][1] = 1;
+	row_view[1][1] = 3;
+	row_view[2][1] = 2;
+	row_view[3][1] = 2;
 
 	initialize_g_grid();
 	process(row_view, col_view);
