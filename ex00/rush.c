@@ -6,7 +6,7 @@
 /*   By: jlee <ing5751@gmail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 21:59:23 by jlee              #+#    #+#             */
-/*   Updated: 2020/07/12 14:54:45 by jlee             ###   ########.fr       */
+/*   Updated: 2020/07/12 15:46:46 by jlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,31 +246,51 @@ void	input_to_array(char *argv[], int **col_view, int **row_view)
 	}
 }
 
-int		main(int argc, char *argv[])
+void	assign_memory(int **grid, int **row_view, int **col_view)
 {
-	int	i;
-	int	*grid[4];
-	int	**row_view;
-	int	**col_view;
+	int i;
 
 	i = 0;
 	while (i < 4)
 	{
 		grid[i] = (int*)malloc(sizeof(int) * 4);
-		i++;
-	}
-	i = 0;
-	row_view = (int**)malloc(sizeof(int*) * 4);
-	col_view = (int**)malloc(sizeof(int*) * 4);
-	while (i < 4)
-	{
 		row_view[i] = (int*)malloc(sizeof(int) * 2);
 		col_view[i] = (int*)malloc(sizeof(int) * 2);
 		i++;
 	}
+}
+
+void	free_variables(int **grid, int **row_view, int **col_view)
+{
+	int i;
+
+	i = 0;
+	while (i < 4)
+	{
+		free(grid[i]);
+		free(row_view[i]);
+		free(col_view[i]);
+		i++;
+	}
+	free(grid);
+	free(row_view);
+	free(col_view);
+}
+
+int		main(int argc, char *argv[])
+{
+	int	**grid;
+	int	**row_view;
+	int	**col_view;
+
+	grid = (int**)malloc(sizeof(int*) * 4);
+	row_view = (int**)malloc(sizeof(int*) * 4);
+	col_view = (int**)malloc(sizeof(int*) * 4);
+	assign_memory(grid, row_view, col_view);
 	if (!check_input_error(argc, argv))
 	{
 		write(1, "Error\n", 6);
+		free_variables(grid, row_view, col_view);
 		return (1);
 	}
 	input_to_array(argv, row_view, col_view);
@@ -279,20 +299,6 @@ int		main(int argc, char *argv[])
 		print_grid(grid);
 	else
 		write(1, "Error\n", 6);
-	i = 0;
-	while (i < 4)
-	{
-		free(row_view[i]);
-		free(col_view[i]);
-		i++;
-	}
-	free(row_view);
-	free(col_view);
-	i = 0;
-	while (i < 4)
-	{
-		free(grid[i]);
-		i++;
-	}
+	free_variables(grid, row_view, col_view);
 	return (0);
 }
