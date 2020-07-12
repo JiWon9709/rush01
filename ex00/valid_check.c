@@ -6,34 +6,9 @@
 /*   By: jlee <ing5751@gmail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/12 17:02:57 by jlee              #+#    #+#             */
-/*   Updated: 2020/07/12 17:03:00 by jlee             ###   ########.fr       */
+/*   Updated: 2020/07/12 17:27:02 by jlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-int		find_unassigned(int **grid, int *row, int *col)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (i < 4)
-	{
-		j = 0;
-		while (j < 4)
-		{
-			if (grid[i][j] == 0)
-			{
-				*row = i;
-				*col = j;
-				return (1);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
 
 int		is_safe_num(int **grid, int row, int col)
 {
@@ -109,13 +84,20 @@ int		is_valid_col_view(int **grid, int col, int **col_view, int inverse)
 	return (0);
 }
 
-int		is_valid_view(int **grid, int row, int col, int **row_view, int **col_view)
+int		is_valid_row_view_all(int **grid, int row, int **row_view)
 {
 	int is_valid;
 
 	is_valid = is_valid_row_view(grid, row, row_view, 0)
-		&& is_valid_row_view(grid, row, row_view, 1)
-		&& is_valid_col_view(grid, col, col_view, 0)
+		&& is_valid_row_view(grid, row, row_view, 1);
+	return (is_valid);
+}
+
+int		is_valid_col_view_all(int **grid, int col, int **col_view)
+{
+	int is_valid;
+
+	is_valid = is_valid_col_view(grid, col, col_view, 0)
 		&& is_valid_col_view(grid, col, col_view, 1);
 	return (is_valid);
 }
