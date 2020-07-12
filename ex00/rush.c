@@ -6,12 +6,13 @@
 /*   By: jlee <ing5751@gmail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 21:59:23 by jlee              #+#    #+#             */
-/*   Updated: 2020/07/12 11:18:10 by jlee             ###   ########.fr       */
+/*   Updated: 2020/07/12 11:42:21 by jlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 int		is_valid_row_view(int **grid, int row, int **row_view, int inverse)
 {
@@ -29,17 +30,15 @@ int		is_valid_row_view(int **grid, int row, int **row_view, int inverse)
 		if (inverse)
 			k = 3 - i;
 		if (grid[row][k] == 0)
-			return 1;
-
-	if (grid[row][k] > current_height)
-	{
-		current_height = grid[row][k];
-		count++;
+			return (1);
+		if (grid[row][k] > current_height)
+		{
+			current_height = grid[row][k];
+			count++;
+		}
+		i++;
 	}
-	i++;
-	}
-
-	if(count == row_view[row][inverse])
+	if (count == row_view[row][inverse])
 		return (1);
 	return (0);
 }
@@ -226,7 +225,34 @@ int		check_input_error(int argc, char *argv[])
 		printf("Wrong len error!");
 		return (0);
 	}
-	return	(1);
+	return (1);
+}
+
+void	input_to_array(char *argv[], int **col_view, int **row_view)
+{
+	int i;
+	int a;
+	int b;
+	int c;
+	int d;
+
+	i = 0;
+	a = 0;
+	b = 0;
+	c = 0;
+	d = 0;
+	while (i < 4)
+	{
+		a = i * 2;
+		b = (i + 4) * 2;
+		c = (i + 8) * 2;
+		d = (i + 12) * 2;
+		col_view[i][0] = argv[1][a] - '0';
+		col_view[i][1] = argv[1][b] - '0';
+		row_view[i][0] = argv[1][c] - '0';
+		row_view[i][1] = argv[1][d] - '0';
+		i++;
+	}
 }
 
 int		main(int argc, char *argv[])
@@ -251,22 +277,7 @@ int		main(int argc, char *argv[])
 		col_view[i] = (int*)malloc(sizeof(int) * 2);
 		i++;
 	}
-//	col_view[0][0] = argv[1][0] - '0';
-//	col_view[1][0] = argv[1][1] - '0';
-//	col_view[2][0] = argv[1][2] - '0';
-//	col_view[3][0] = argv[1][3] - '0';
-//	col_view[0][1] = argv[1][4] - '0';
-//	col_view[1][1] = argv[1][5] - '0';
-//	col_view[2][1] = argv[1][6] - '0';
-//	col_view[3][1] = argv[1][7] - '0';
-//	row_view[0][0] = argv[1][8] - '0';
-//	row_view[1][0] = argv[1][9] - '0';
-//	row_view[2][0] = argv[1][10] - '0';
-//	row_view[3][0] = argv[1][11] - '0';
-//	row_view[0][1] = argv[1][12] - '0';
-//	row_view[1][1] = argv[1][13] - '0';
-//	row_view[2][1] = argv[1][14] - '0';
-//	row_view[3][1] = argv[1][15] - '0';
+	input_to_array(argv, row_view, col_view);
 	initialize_grid(grid);
 	process(grid, row_view, col_view);
 	print_grid(grid);
