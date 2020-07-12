@@ -6,13 +6,12 @@
 /*   By: jlee <ing5751@gmail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 21:59:23 by jlee              #+#    #+#             */
-/*   Updated: 2020/07/12 11:42:21 by jlee             ###   ########.fr       */
+/*   Updated: 2020/07/12 14:28:55 by jlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 int		is_valid_row_view(int **grid, int row, int **row_view, int inverse)
 {
@@ -83,12 +82,13 @@ int		is_valid_view(int **grid, int row, int col, int **row_view, int **col_view)
 	return (is_valid);
 }
 
-int		is_unassigned(int **grid, int *row, int *col)
+int		find_unassigned(int **grid, int *row, int *col)
 {
 	int i;
 	int j;
 
 	i = 0;
+	j = 0;
 	while (i < 4)
 	{
 		j = 0;
@@ -107,7 +107,7 @@ int		is_unassigned(int **grid, int *row, int *col)
 	return (0);
 }
 
-int		is_valid_row_col(int **grid, int row, int col)
+int		is_safe_num(int **grid, int row, int col)
 {
 	int i;
 
@@ -123,23 +123,23 @@ int		is_valid_row_col(int **grid, int row, int col)
 	return (1);
 }
 
-int		process(int **grid, int **row_view, int **col_view)
+int		solve(int **grid, int **row_view, int **col_view)
 {
-	int val;
 	int row;
 	int col;
+	int val;
 
 	val = 1;
-	if (!is_unassigned(grid, &row, &col))
+	if (!find_unassigned(grid, &row, &col))
 		return (1);
 	while (val <= 4)
 	{
 		grid[row][col] = val;
-		if (is_valid_row_col(grid, row, col))
+		if (is_safe_num(grid, row, col))
 		{
 			if (is_valid_view(grid, row, col, row_view, col_view))
 			{
-				if (process(grid, row_view, col_view))
+				if (solve(grid, row_view, col_view))
 					return (1);
 			}
 		}
@@ -151,27 +151,27 @@ int		process(int **grid, int **row_view, int **col_view)
 
 void	initialize_grid(int **grid)
 {
-	int i;
-	int j;
+	int row;
+	int col;
 
-	i = 0;
-	while (i < 4)
+	row = 0;
+	while (row < 4)
 	{
-		j = 0;
-		while (j < 4)
+		col = 0;
+		while (col < 4)
 		{
-			grid[i][j] = 0;
-			j++;
+			grid[row][col] = 0;
+			col++;
 		}
-		i++;
+		row++;
 	}
 }
 
 void	print_grid(int **grid)
 {
-	char	g[4][4];
 	int		i;
 	int		j;
+	char	c;
 
 	i = 0;
 	while (i < 4)
@@ -179,8 +179,8 @@ void	print_grid(int **grid)
 		j = 0;
 		while (j < 4)
 		{
-			g[i][j] = '0' + grid[i][j];
-			write(1, &g[i][j], 1);
+			c = '0' + grid[i][j];
+			write(1, &c, 1);
 			if (j < 3)
 				write(1, " ", 1);
 			j++;
@@ -196,35 +196,26 @@ int		check_input_error(int argc, char *argv[])
 
 	i = 0;
 	if (argc != 2)
-	{
-		printf("Wrong argc Error!\n");
 		return (0);
-	}
 	while (argv[1][i])
 	{
 		if (i == 0 || i % 2 == 0)
 		{
 			if (!(argv[1][i] >= '1' && argv[1][i] <= '4'))
-			{
-				printf("Wrong number Error!\n");
 				return (0);
-			}
 		}
 		else
 		{
 			if (argv[1][i] != ' ')
-			{
-				printf("Space Error!\n");
 				return (0);
-			}
 		}
 		i++;
 	}
-	if (i != 31)
-	{
-		printf("Wrong len error!");
-		return (0);
-	}
+	i = 0;
+	while (argv[1][i])
+		i++;
+	if (i != 30)
+			return (0);
 	return (1);
 }
 
@@ -277,21 +268,27 @@ int		main(int argc, char *argv[])
 		col_view[i] = (int*)malloc(sizeof(int) * 2);
 		i++;
 	}
+	if (!check_input_error(argc, argv))
+		write(1, "Error\n", 6);
 	input_to_array(argv, row_view, col_view);
 	initialize_grid(grid);
-	process(grid, row_view, col_view);
-	print_grid(grid);
-	i = 0;
-	while (i < 4)
-	{
-		free(grid[i]);
-		i++;
-	}
+	if (solve(grid, row_view, col_view))
+		print_grid(grid);
+	else
+		write(1, "Error\n", 6);
 	i = 0;
 	while (i < 4)
 	{
 		free(row_view[i]);
 		free(col_view[i]);
+		i++;
+	}
+	free(row_view);
+	free(col_view);
+	i = 0;
+	while (i < 4)
+	{
+		free(grid[i]);
 		i++;
 	}
 	return (0);
