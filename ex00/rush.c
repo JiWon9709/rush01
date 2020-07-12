@@ -6,7 +6,7 @@
 /*   By: jlee <ing5751@gmail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 21:59:23 by jlee              #+#    #+#             */
-/*   Updated: 2020/07/11 23:25:52 by jlee             ###   ########.fr       */
+/*   Updated: 2020/07/12 11:18:10 by jlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,44 @@ void	print_grid(int **grid)
 	}
 }
 
+int		check_input_error(int argc, char *argv[])
+{
+	int i;
+
+	i = 0;
+	if (argc != 2)
+	{
+		printf("Wrong argc Error!\n");
+		return (0);
+	}
+	while (argv[1][i])
+	{
+		if (i == 0 || i % 2 == 0)
+		{
+			if (!(argv[1][i] >= '1' && argv[1][i] <= '4'))
+			{
+				printf("Wrong number Error!\n");
+				return (0);
+			}
+		}
+		else
+		{
+			if (argv[1][i] != ' ')
+			{
+				printf("Space Error!\n");
+				return (0);
+			}
+		}
+		i++;
+	}
+	if (i != 31)
+	{
+		printf("Wrong len error!");
+		return (0);
+	}
+	return	(1);
+}
+
 int		main(int argc, char *argv[])
 {
 	int	i;
@@ -198,8 +236,6 @@ int		main(int argc, char *argv[])
 	int	**row_view;
 	int	**col_view;
 
-	if (argc != 2)
-		return (-1);
 	i = 0;
 	while (i < 4)
 	{
@@ -215,22 +251,22 @@ int		main(int argc, char *argv[])
 		col_view[i] = (int*)malloc(sizeof(int) * 2);
 		i++;
 	}
-	col_view[0][0] = argv[1][0] - '0';
-	col_view[1][0] = argv[1][1] - '0';
-	col_view[2][0] = argv[1][2] - '0';
-	col_view[3][0] = argv[1][3] - '0';
-	col_view[0][1] = argv[1][4] - '0';
-	col_view[1][1] = argv[1][5] - '0';
-	col_view[2][1] = argv[1][6] - '0';
-	col_view[3][1] = argv[1][7] - '0';
-	row_view[0][0] = argv[1][8] - '0';
-	row_view[1][0] = argv[1][9] - '0';
-	row_view[2][0] = argv[1][10] - '0';
-	row_view[3][0] = argv[1][11] - '0';
-	row_view[0][1] = argv[1][12] - '0';
-	row_view[1][1] = argv[1][13] - '0';
-	row_view[2][1] = argv[1][14] - '0';
-	row_view[3][1] = argv[1][15] - '0';
+//	col_view[0][0] = argv[1][0] - '0';
+//	col_view[1][0] = argv[1][1] - '0';
+//	col_view[2][0] = argv[1][2] - '0';
+//	col_view[3][0] = argv[1][3] - '0';
+//	col_view[0][1] = argv[1][4] - '0';
+//	col_view[1][1] = argv[1][5] - '0';
+//	col_view[2][1] = argv[1][6] - '0';
+//	col_view[3][1] = argv[1][7] - '0';
+//	row_view[0][0] = argv[1][8] - '0';
+//	row_view[1][0] = argv[1][9] - '0';
+//	row_view[2][0] = argv[1][10] - '0';
+//	row_view[3][0] = argv[1][11] - '0';
+//	row_view[0][1] = argv[1][12] - '0';
+//	row_view[1][1] = argv[1][13] - '0';
+//	row_view[2][1] = argv[1][14] - '0';
+//	row_view[3][1] = argv[1][15] - '0';
 	initialize_grid(grid);
 	process(grid, row_view, col_view);
 	print_grid(grid);
