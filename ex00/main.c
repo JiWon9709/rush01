@@ -6,12 +6,20 @@
 /*   By: jlee <ing5751@gmail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/12 17:08:17 by jlee              #+#    #+#             */
-/*   Updated: 2020/07/12 17:08:39 by jlee             ###   ########.fr       */
+/*   Updated: 2020/07/12 17:41:20 by jlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
+
+void	assign_memory(int **grid, int **row_view, int **col_view);
+int		check_input_error(int argc, char *argv[]);
+void	input_to_array(char *argv[], int **row_view, int **col_view);
+void	initialize_grid(int **grid);
+int		solve(int **grid, int **row_view, int **col_view);
+void	print_grid(int **grid);
+void	free_variables(int **grid, int **row_view, int **col_view);
 
 int		main(int argc, char *argv[])
 {

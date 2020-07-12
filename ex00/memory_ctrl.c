@@ -6,11 +6,11 @@
 /*   By: jlee <ing5751@gmail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/12 17:06:48 by jlee              #+#    #+#             */
-/*   Updated: 2020/07/12 17:07:42 by jlee             ###   ########.fr       */
+/*   Updated: 2020/07/12 17:30:43 by jlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include <stdlib.h>
 
 void	assign_memory(int **grid, int **row_view, int **col_view)
 {

@@ -6,9 +6,13 @@
 /*   By: jlee <ing5751@gmail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/12 17:05:53 by jlee              #+#    #+#             */
-/*   Updated: 2020/07/12 17:28:27 by jlee             ###   ########.fr       */
+/*   Updated: 2020/07/12 17:40:52 by jlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+int		is_safe_num(int **grid, int row, int col);
+int		is_valid_row_view_all(int **grid, int row, int **row_view);
+int		is_valid_col_view_all(int **grid, int col, int **col_view);
 
 int		find_unassigned(int **grid, int *row, int *col)
 {
