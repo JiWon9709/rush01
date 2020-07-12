@@ -6,7 +6,7 @@
 /*   By: jlee <ing5751@gmail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 21:59:23 by jlee              #+#    #+#             */
-/*   Updated: 2020/07/12 14:28:55 by jlee             ###   ########.fr       */
+/*   Updated: 2020/07/12 14:54:45 by jlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,8 +214,8 @@ int		check_input_error(int argc, char *argv[])
 	i = 0;
 	while (argv[1][i])
 		i++;
-	if (i != 30)
-			return (0);
+	if (i != 31)
+		return (0);
 	return (1);
 }
 
@@ -269,7 +269,10 @@ int		main(int argc, char *argv[])
 		i++;
 	}
 	if (!check_input_error(argc, argv))
+	{
 		write(1, "Error\n", 6);
+		return (1);
+	}
 	input_to_array(argv, row_view, col_view);
 	initialize_grid(grid);
 	if (solve(grid, row_view, col_view))
