@@ -6,7 +6,7 @@
 /*   By: jlee <ing5751@gmail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/11 21:59:23 by jlee              #+#    #+#             */
-/*   Updated: 2020/07/12 15:46:46 by jlee             ###   ########.fr       */
+/*   Updated: 2020/07/12 16:18:16 by jlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ int		check_input_error(int argc, char *argv[])
 	return (1);
 }
 
-void	input_to_array(char *argv[], int **col_view, int **row_view)
+void	input_to_array(char *argv[], int **row_view, int **col_view)
 {
 	int i;
 	int a;
