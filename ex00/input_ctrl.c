@@ -6,11 +6,11 @@
 /*   By: jlee <ing5751@gmail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/12 17:03:21 by jlee              #+#    #+#             */
-/*   Updated: 2020/07/12 17:04:04 by jlee             ###   ########.fr       */
+/*   Updated: 2020/07/12 20:30:54 by jlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int		check_input_error(int argc, char *argv[])
+int		is_valid_input(int argc, char *argv[])
 {
 	int i;
 

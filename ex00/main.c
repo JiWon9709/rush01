@@ -6,7 +6,7 @@
 /*   By: jlee <ing5751@gmail.com>                   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/12 17:08:17 by jlee              #+#    #+#             */
-/*   Updated: 2020/07/12 17:41:20 by jlee             ###   ########.fr       */
+/*   Updated: 2020/07/12 20:30:26 by jlee             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdlib.h>
 
 void	assign_memory(int **grid, int **row_view, int **col_view);
-int		check_input_error(int argc, char *argv[]);
+int		is_valid_input(int argc, char *argv[]);
 void	input_to_array(char *argv[], int **row_view, int **col_view);
 void	initialize_grid(int **grid);
 int		solve(int **grid, int **row_view, int **col_view);
@@ -31,7 +31,7 @@ int		main(int argc, char *argv[])
 	row_view = (int**)malloc(sizeof(int*) * 4);
 	col_view = (int**)malloc(sizeof(int*) * 4);
 	assign_memory(grid, row_view, col_view);
-	if (!check_input_error(argc, argv))
+	if (!is_valid_input(argc, argv))
 	{
 		write(1, "Error\n", 6);
 		free_variables(grid, row_view, col_view);
